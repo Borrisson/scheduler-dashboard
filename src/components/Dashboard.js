@@ -30,20 +30,30 @@ const data = [
 ];
 
 class Dashboard extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      loading: false,
-      focused: null,
-    };
-  }
-
-  selectPanel = (id) => {
-    this.setState({
-      focused: id,
-    });
+  state = {
+    loading: false,
+    focused: null,
   };
 
+  componentDidMount() {
+    const focused = JSON.parse(localStorage.getItem("focused"));
+
+    if (focused) {
+      this.setState({ focused });
+    }
+  }
+
+  componentDidUpdate(previousProps, previousState) {
+    if (previousState.focused !== this.state.focused) {
+      localStorage.setItem("focused", JSON.stringify(this.state.focused));
+    }
+  }
+
+  selectPanel(id) {
+    this.setState((previousState) => ({
+      focused: previousState.focused !== null ? null : id,
+    }));
+  }
   render() {
     const dashboardClasses = classnames("dashboard", {
       "dashboard--focused": this.state.focused,

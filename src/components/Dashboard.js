@@ -34,8 +34,8 @@ class Dashboard extends Component {
     loading: true,
     focused: null,
     days: [],
-    appointments: [],
-    interviewers: [],
+    appointments: {},
+    interviewers: {},
   };
 
   componentDidMount() {
